@@ -40,7 +40,7 @@ const CreateForm = () => {
 	return (
 		<>
 			<form
-				onClick={handleSubmit(createFormHandler)}
+				onSubmit={handleSubmit(createFormHandler)}
 				className="grid gap-6">
 				<Controller
 					name="firstName"
