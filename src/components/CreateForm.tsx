@@ -53,7 +53,7 @@ const CreateForm = () => {
 								id={field.name}
 								aria-invalid={fieldState.invalid}
 								placeholder="Enter your first name"
-								// autoComplete="given-name"
+								autoComplete="given-name"
 							/>
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
@@ -71,7 +71,7 @@ const CreateForm = () => {
 								id={field.name}
 								aria-invalid={fieldState.invalid}
 								placeholder="Enter your last name"
-								// autoComplete="family-name"
+								autoComplete="family-name"
 							/>
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
@@ -89,7 +89,7 @@ const CreateForm = () => {
 								id={field.name}
 								aria-invalid={fieldState.invalid}
 								placeholder="Enter your email"
-								// autoComplete="email"
+								autoComplete="email"
 							/>
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
