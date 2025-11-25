@@ -2,12 +2,13 @@
 
 import genarateUserDetails from "@/hooks/genarateUserDetails";
 import delay from "@/lib/delay";
-import { userSchema } from "@/lib/zodSchema";
+import { userFormSchema, UserFormType } from "@/lib/zodSchema";
+import createDBUser from "@/server/createDBUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BadgePlusIcon, Loader2Icon, LoaderIcon, SendIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import z from "zod";
+import { toast } from "react-toastify";
 import { Button } from "./shadcnui/button";
 import { Field, FieldError, FieldLabel } from "./shadcnui/field";
 import { Input } from "./shadcnui/input";
@@ -30,7 +31,7 @@ const CreateForm = () => {
 		setValue,
 		clearErrors,
 	} = useForm({
-		resolver: zodResolver(userSchema),
+		resolver: zodResolver(userFormSchema),
 		defaultValues: {
 			firstName: "",
 			lastName: "",
@@ -40,15 +41,21 @@ const CreateForm = () => {
 		mode: "all",
 	});
 
-	const createFormHandler = async (data: z.infer<typeof userSchema>) => {
+	const createFormHandler = async (cuData: UserFormType) => {
 		await delay(1000);
 
-		console.log(data);
+		const { isSuccess, message } = await createDBUser(cuData);
 
-		reset();
+		if (isSuccess) {
+			toast.success(message);
+
+			reset();
+		} else {
+			toast.error(message);
+		}
 	};
 
-	const genarateDetails = async () => {
+	const genarateDetailsHandler = async () => {
 		setIsLoading(true);
 
 		const { firstName, lastName, email, gender } = genarateUserDetails();
@@ -175,7 +182,7 @@ const CreateForm = () => {
 			</form>
 
 			<Button
-				onClick={genarateDetails}
+				onClick={genarateDetailsHandler}
 				disabled={isLoading}
 				type="button"
 				variant={"outline"}
