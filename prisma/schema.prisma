@@ -4,7 +4,6 @@
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
-  runtime  = "nodejs"
 }
 
 datasource db {
@@ -17,6 +16,4 @@ model User {
   lastName  String
   email     String @unique
   gender    String
-
-  @@map("users")
 }
