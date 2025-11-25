@@ -1,6 +1,6 @@
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import { PrismaClient } from "../../generated/prisma/client";
-import { serverEnv } from "./env/serverEnv";
+import { PrismaClient } from "../../../generated/prisma/client";
+import { serverEnv } from "../env/serverEnv";
 
 const globalForPrisma = globalThis as unknown as {
 	prisma?: PrismaClient;
