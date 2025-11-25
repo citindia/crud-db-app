@@ -1,8 +1,11 @@
 "use client";
 
+import genarateUserDetails from "@/hooks/genarateUserDetails";
+import delay from "@/lib/delay";
 import { userSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2Icon, SendIcon } from "lucide-react";
+import { BadgePlusIcon, Loader2Icon, LoaderIcon, SendIcon } from "lucide-react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "./shadcnui/button";
@@ -17,11 +20,15 @@ import {
 } from "./shadcnui/select";
 
 const CreateForm = () => {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const {
 		handleSubmit,
 		control,
-		formState: { isSubmitting, isDirty },
+		formState: { isSubmitting },
 		reset,
+		setValue,
+		clearErrors,
 	} = useForm({
 		resolver: zodResolver(userSchema),
 		defaultValues: {
@@ -34,7 +41,28 @@ const CreateForm = () => {
 	});
 
 	const createFormHandler = async (data: z.infer<typeof userSchema>) => {
+		await delay(1000);
+
 		console.log(data);
+
+		reset();
+	};
+
+	const genarateDetails = async () => {
+		setIsLoading(true);
+
+		const { firstName, lastName, email, gender } = genarateUserDetails();
+
+		await delay(1000);
+
+		setValue("firstName", firstName);
+		setValue("lastName", lastName);
+		setValue("email", email);
+		setValue("gender", gender);
+
+		clearErrors();
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -123,7 +151,6 @@ const CreateForm = () => {
 				<div className="grid grid-cols-2 gap-4">
 					<Button
 						onClick={() => reset()}
-						disabled={!isDirty}
 						type="reset"
 						variant={"destructive"}
 						className="cursor-pointer">
@@ -148,10 +175,20 @@ const CreateForm = () => {
 			</form>
 
 			<Button
+				onClick={genarateDetails}
+				disabled={isLoading}
 				type="button"
 				variant={"outline"}
 				className="w-full cursor-pointer">
-				Genarate User Details
+				{isLoading ? (
+					<>
+						<LoaderIcon className="animate-spin" /> Generating..
+					</>
+				) : (
+					<>
+						<BadgePlusIcon /> Genarate User Details
+					</>
+				)}
 			</Button>
 		</>
 	);
