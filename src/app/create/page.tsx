@@ -9,7 +9,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Create | CRUD DB App",
-	description: "Create page of CRUD DB App",
+	description: "Create user page of CRUD DB App",
 };
 
 const page = () => {

@@ -6,6 +6,7 @@ import { userFormSchema, UserFormType } from "@/lib/zodSchema";
 import createDBUser from "@/server/createDBUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BadgePlusIcon, Loader2Icon, LoaderIcon, SendIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -22,6 +23,8 @@ import {
 
 const CreateForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
+
+	const { push } = useRouter();
 
 	const {
 		handleSubmit,
@@ -50,6 +53,8 @@ const CreateForm = () => {
 			toast.success(message);
 
 			reset();
+
+			push("/");
 		} else {
 			toast.error(message);
 		}

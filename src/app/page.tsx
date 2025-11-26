@@ -1,19 +1,31 @@
+import UserCard from "@/components/UserCard";
+import prisma from "@/lib/database/dbClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Next.js Starter Fullstack",
-	description: "Production grade Fullstack Next.js starter template",
+	title: "List | CRUD DB App",
+	description: "List user page of CRUD DB App",
 };
 
-const page = () => {
+const page = async () => {
+	const allUsers = await prisma.user.findMany();
+
 	return (
-		<section className="grid h-[90dvh] place-items-center">
-			<div className="space-y-2 text-center">
-				<h1 className="text-5xl font-semibold">Next.js Starter Fullstack</h1>
-				<h2 className="text-3xl">
-					Production grade Fullstack Next.js starter template
-				</h2>
+		<section className="container mx-auto py-16">
+			<div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+				{allUsers.map((user) => (
+					<UserCard
+						key={user.id}
+						user={user}
+					/>
+				))}
 			</div>
+
+			{allUsers.length === 0 && (
+				<div className="grid h-[90dvh] place-items-center">
+					<p className="text-muted-foreground text-center">No users found</p>
+				</div>
+			)}
 		</section>
 	);
 };
