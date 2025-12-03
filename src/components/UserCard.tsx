@@ -25,12 +25,12 @@ const UserCard = ({ user }: UserCardProps) => {
 
 			<Separator />
 
-			<CardContent className="place-items-center text-2xl">
-				<div className="flex items-center gap-4 capitalize">
+			<CardContent className="place-items-center">
+				<div className="flex items-center gap-4 text-2xl capitalize">
 					<User2Icon /> {user.gender}
 				</div>
-				<div className="flex items-center gap-4">
-					<MailIcon /> {user.email}
+				<div className="flex items-center gap-2 text-lg">
+					<MailIcon size={16} /> {user.email}
 				</div>
 			</CardContent>
 
